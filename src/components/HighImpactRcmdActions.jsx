@@ -13,7 +13,7 @@ import {
 import { Doughnut, Bar } from "react-chartjs-2";
 import { ModelData } from "../utils/ModelData";
 
-export default function HighImpactRcmdActions({ fuld }) {
+export default function HighImpactRcmdActions({ fuld,setHra }) {
   ChartJS.register(
     ArcElement,
     CategoryScale,
@@ -88,6 +88,7 @@ export default function HighImpactRcmdActions({ fuld }) {
 
   useEffect(() => {
     const res = ModelData(fuld);
+    setHra(res.points)
     setResults(res);
   }, []);
 

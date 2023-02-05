@@ -6,9 +6,24 @@ import { ReactComponent as CloudUpload } from "./assets/cloud-upload.svg";
 import { ReactComponent as ArrowLeft } from "./assets/arrow-left.svg";
 import RcmdActions from "./components/RcmdActions";
 import HighImpactRcmdActions from "./components/HighImpactRcmdActions";
+import { useEffect } from "react";
+import BottomSection from "./components/BottomSection";
+import ModalAverage from "./components/ModalAverage";
 
 function App() {
+  const [open, setOpen] = useState(false);
   const [data, setData] = useState(null);
+  const [ra, setRa] = useState({ achieved: 0, total: 0 });
+  const [hra, setHra] = useState({ achieved: 0, total: 0 });
+  const [weigtedResult, setWeightedResult] = useState(0);
+  const calculateWeightenedPercentage = () => {
+    setWeightedResult((ra.achieved / ra.total) * 0.25) +
+      (hra.achieved / hra.total) * 0.75;
+  };
+
+  useEffect(() => {
+    calculateWeightenedPercentage();
+  }, [ra, hra]);
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -35,12 +50,14 @@ function App() {
 
   return (
     <div className="App">
-      <div className="navbar">
-        <div className="logo">
+      <div className="navbar justify-between">
+        <div style={{ flex: 1 }} className="logo">
           <Bluevoyant />
         </div>
-        <p className="nav-title">Required Vs. Situation Recommendations</p>
-        {/* <div className="profile-icon"></div> */}
+        <p style={{ flex: 4, textAlign: "center" }} className="nav-title">
+          BlueVoyant Best Practice Configuration
+        </p>
+        <div style={{ flex: 1 }}></div>
       </div>
 
       {/** *************************************************** */}
@@ -70,24 +87,42 @@ function App() {
       )}
       {data && (
         <div className="recom-action-container">
-          <div
-            className="breadcrumbs"
-            onClick={() => {
-              setData(null);
-            }}
-          >
-            <span>
-              <ArrowLeft className="breadcrumbs-icon" />
-            </span>
-            <p className="breadcrumbs-content">Back to upload file</p>
+          <div className="flex-row justify-between mb-20">
+            <div
+              className="breadcrumbs"
+              onClick={() => {
+                setData(null);
+              }}
+            >
+              <span>
+                <ArrowLeft className="breadcrumbs-icon" />
+              </span>
+              <p className="breadcrumbs-content">Back to upload file</p>
+            </div>
+            <div
+              className="avg-btn"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              Display Average
+            </div>
           </div>
+          <ModalAverage
+            open={open}
+            setOpen={setOpen}
+            weigtedResult={weigtedResult}
+          />
           <div className="recom-action-wrapper">
             {/******** Recommended Actions ****** */}
-            <RcmdActions fuld={data.recommended} />
+            <RcmdActions setRa={setRa} fuld={data.recommended} />
             {/******** High Impact Recommended Actions ****** */}
-            <HighImpactRcmdActions fuld={data.highImpact} />
+            <HighImpactRcmdActions setHra={setHra} fuld={data.highImpact} />
           </div>
         </div>
+      )}
+      {data && (
+        <BottomSection data={[...data.highImpact, ...data.recommended]} />
       )}
     </div>
   );
