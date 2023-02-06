@@ -71,11 +71,9 @@ console.log(weigtedResult)
     },
   };
   const data = {
-    labels: ["To address", "Completed"],
     datasets: [
       {
-        label: "%",
-
+       
         data: [weigtedResult*100, 100-(weigtedResult*100)],
         backgroundColor: ["#118dff", "#0000ff"],
         borderColor: ["#118dff", "#0000ff"],
@@ -92,16 +90,19 @@ console.log(weigtedResult)
       
         <div className="modal-container">
             <p style={{marginLeft:"auto",textAlign:"right",fontWeight:"bold"}} className="pointer" onClick={()=>setOpen(false)}>X</p>
+            <div className="center-absolute" style={{textAlign:"center"}}><p  style={{fontSize:40}}>{100-(weigtedResult*100).toFixed(1)}%</p><p style={{fontSize:30}}>Deployed</p></div>
           <Doughnut
             data={data}
-            plugins={[backgroundCircle, doughnutLabelsLine]}
+            plugins={[backgroundCircle]}
             options={{
+             
+            
               maintainAspectRatio: true,
               responsive: true,
               layout: {
-                padding: 20,
               },
               plugins: {
+                
                 legend: {
                   display: false,
                 },
