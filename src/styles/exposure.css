@@ -1,0 +1,35 @@
+.exposure-wrapper {
+  margin: 40px 0px;
+}
+.exposure-title {
+  font-size: 1.15em;
+  font-weight: 700;
+  text-align: center;
+  background: #0000ff;
+  color: white;
+  padding: 16px 24px;
+}
+.exposure-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.exposure-item {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  border: 1px solid #c7c7c7;
+  padding: 15px;
+}
+
+.exposure-item-nb {
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.exposure-item-subtitle {
+  font-size: 1em;
+  font-weight: 400;
+  letter-spacing: -1px;
+  color: var(--color-calcite-800);
+}

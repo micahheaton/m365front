@@ -50,7 +50,7 @@ export default function ModalAverage({ weigtedResult, open, setOpen }) {
       });
     },
   };
-console.log(weigtedResult)
+console.log("weigtedResult",weigtedResult)
   const backgroundCircle = {
     id: "backgroundCircle",
     beforeDatasetsDraw(chart, args, pluginOptions) {
@@ -74,7 +74,7 @@ console.log(weigtedResult)
     datasets: [
       {
        
-        data: [weigtedResult*100, 100-(weigtedResult*100)],
+        data: [weigtedResult, 100-(weigtedResult)],
         backgroundColor: ["#118dff", "#0000ff"],
         borderColor: ["#118dff", "#0000ff"],
         borderWidth: 0,
@@ -90,7 +90,7 @@ console.log(weigtedResult)
       
         <div className="modal-container">
             <p style={{marginLeft:"auto",textAlign:"right",fontWeight:"bold"}} className="pointer" onClick={()=>setOpen(false)}>X</p>
-            <div className="center-absolute" style={{textAlign:"center"}}><p  style={{fontSize:40}}>{100-(weigtedResult*100).toFixed(1)}%</p><p style={{fontSize:30}}>Deployed</p></div>
+            <div className="center-absolute" style={{textAlign:"center"}}><p  style={{fontSize:40}}>{parseFloat(weigtedResult).toFixed(1)}%</p><p style={{fontSize:30}}>Deployed</p></div>
           <Doughnut
             data={data}
             plugins={[backgroundCircle]}
