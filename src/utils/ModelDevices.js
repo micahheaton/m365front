@@ -111,13 +111,6 @@ export const modelDevices = (devices) => {
     return acc;
   }, []);
 
-
-  console.log(managedBy);
-  console.log(osPlatform);
-  console.log(risks);
-  console.log(exposures);
-  console.log(healthStatus);
-  console.log(antiVirus);
   return {managedBy,osPlatform,risks,exposures,healthStatus,antiVirus}
   
 };

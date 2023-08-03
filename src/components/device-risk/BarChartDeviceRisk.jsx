@@ -79,6 +79,7 @@ export default function BarChartDeviceRisk({
     labels: managedByData.map((el) => el.name),
     datasets: [
       {
+        label: "Points achieved",
         data: managedByData.map((el) => el.count),
         borderColor: "#0000ff",
         backgroundColor: (element) => {
@@ -95,6 +96,7 @@ export default function BarChartDeviceRisk({
     labels: osPlatformData.map((el) => el.name),
     datasets: [
       {
+        label: "Points achieved",
         data: osPlatformData.map((el) => el.count),
         borderColor: "#0000ff",
         backgroundColor: (element) => {

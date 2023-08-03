@@ -17,9 +17,12 @@ export default function RecommendedActions() {
   const [hra, setHra] = useState({ achieved: 0, total: 0 });
   const [weigtedResult, setWeightedResult] = useState(0);
   const calculateWeightenedPercentage = () => {
-    setWeightedResult(
-      (ra.achieved / ra.total) * 0.25 + (hra.achieved / hra.total) * 0.75
-    );
+  
+    const weigh = (ra.achieved / ra.total) * 0.25 +
+    (hra.achieved / hra.total) * 0.75;
+   console.log("weigh",weigh)
+    setWeightedResult((ra.achieved / ra.total) * 0.25 +
+      (hra.achieved / hra.total) * 0.75);
   };
 
   useEffect(() => {
@@ -57,7 +60,7 @@ export default function RecommendedActions() {
           <ModalAverage
             open={open}
             setOpen={setOpen}
-            weigtedResult={(weigtedResult * 100).toFixed(1)}
+            weigtedResult={(weigtedResult).toFixed(3)}
           />
           <div className="recom-action-wrapper">
             {/******** Recommended Actions ****** */}

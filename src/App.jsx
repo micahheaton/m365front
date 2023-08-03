@@ -5,6 +5,7 @@ import ReactSelect from "react-select";
 import Papa from "papaparse";
 import { ReactComponent as CloudUpload } from "./assets/cloud-upload.svg";
 import { useNavigate } from "react-router-dom";
+import ModelRecommendedACtions from "./utils/ModelRecommendedActions";
 
 function App() {
   const navigate = useNavigate();
@@ -37,22 +38,9 @@ function App() {
           },
         });
       } else {
-        const formData = new FormData();
-        formData.append("input_file", file);
-
         try {
-          const res = await axios.post(
-            "https://bluebackend-ttbv.onrender.com/filter-data",
-            formData,
-            {
-              headers: {
-                "content-type": "multipart/form-data",
-              },
-            }
-          );
-          if (res.status === 200 || res.status === 201) {
-            setData(res.data);
-          }
+         const res =  await ModelRecommendedACtions(file)
+         setData(res)
         } catch (err) {
           console.error(err);
           alert("something went wrong");
