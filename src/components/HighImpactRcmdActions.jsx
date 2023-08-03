@@ -38,7 +38,6 @@ export default function HighImpactRcmdActions({ fuld,setHra }) {
 
   function calculateResults(arr) {
     const res = ModelData(arr);
-    console.log(res);
     setResults(res);
   }
 

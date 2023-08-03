@@ -50,7 +50,6 @@ export default function ModalAverage({ weigtedResult, open, setOpen }) {
       });
     },
   };
-console.log(weigtedResult)
   const backgroundCircle = {
     id: "backgroundCircle",
     beforeDatasetsDraw(chart, args, pluginOptions) {

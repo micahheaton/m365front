@@ -40,7 +40,6 @@ function calculateCategoryResults(arr) {
 // This function is similar to calculateCategoryResults, but it also logs the results to the console and sets the 'results' state variable.
 function calculateResults(arr) {
   const res = ModelData(arr);
-  console.log(res);
   setResults(res);
 }
 
