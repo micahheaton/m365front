@@ -5,37 +5,7 @@ import { CSVLink } from "react-csv";
 import MaterialReactTable from "material-react-table";
 
 function BottomSection({ data }) {
-  // const [filteredData, setFilteredData] = useState({
-  //   devices: [],
-  //   apps: [],
-  //   identity: [],
-  // });
-  // // const [isDevicesShown, setIsDevicesShown] = useState(true);
-  // // const [isAppsShown, setIsAppsShown] = useState(true);
-  // // const [isIdentityShown, setIsIdentityShown] = useState(true);
-  // function filterData() {
-  //   const dev = [];
-  //   const app = [];
-  //   const idd = [];
-  //   data.forEach((element) => {
-  //     if (element.Category == "Device") {
-  //       dev.push(element);
-  //     } else if (element.Category == "Apps") {
-  //       app.push(element);
-  //     } else if (element.Category == "Identity") {
-  //       idd.push(element);
-  //     }
-  //   });
-
-  //   setFilteredData({
-  //     devices: dev,
-  //     apps: app,
-  //     identity: idd,
-  //   });
-  // }
-  // useEffect(() => {
-  //   filterData();
-  // }, []);
+  
 
   //**************table****************** */
   const columns = useMemo(
@@ -120,89 +90,7 @@ function BottomSection({ data }) {
           }}
         />
       </div>
-      {/* <div className="collapse-container">
-        <div className="mb-20">
-          <div
-            onClick={() => setIsDevicesShown(!isDevicesShown)}
-            className="collapse-header flex-row align-center justify-between pointer"
-          >
-            <span>Devices</span>
-            <span
-              style={
-                isDevicesShown
-                  ? {
-                      transform: "rotate(180deg)",
-                      transition: "0.2s linear",
-                    }
-                  : { transition: "0.2s linear" }
-              }
-            >
-              <ArrowDownIcon />
-            </span>
-          </div>
-          {isDevicesShown &&
-            filteredData.devices.map((el) => (
-              <p className="collapse-item">
-                {el["Recommended action"]} // {el["Points achieved"]} //
-                {el["Score impact"]} // {el["Status"]}
-              </p>
-            ))}
-        </div>
-        <div className="mb-20">
-          <p
-            onClick={() => setIsAppsShown(!isAppsShown)}
-            className="collapse-header flex-row align-center justify-between pointer"
-          >
-            <span>Apps</span>
-            <span
-              style={
-                isAppsShown
-                  ? {
-                      transform: "rotate(180deg)",
-                      transition: "0.2s linear",
-                    }
-                  : { transition: "0.2s linear" }
-              }
-            >
-              <ArrowDownIcon />
-            </span>
-          </p>
-          {isAppsShown &&
-            filteredData.apps.map((el) => (
-              <p className="collapse-item">
-                {el["Recommended action"]} // {el["Points achieved"]} //
-                {el["Score impact"]} // {el["Status"]}
-              </p>
-            ))}
-        </div>
-        <div className="mb-20">
-          <p
-            onClick={() => setIsIdentityShown(!isIdentityShown)}
-            className="collapse-header flex-row align-center justify-between pointer"
-          >
-            <span>Identity</span>
-            <span
-              style={
-                isIdentityShown
-                  ? {
-                      transform: "rotate(180deg)",
-                      transition: "0.2s linear",
-                    }
-                  : { transition: "0.2s linear" }
-              }
-            >
-              <ArrowDownIcon />
-            </span>
-          </p>
-          {isIdentityShown &&
-            filteredData.identity.map((el) => (
-              <p className="collapse-item">
-                {el["Recommended action"]} // {el["Points achieved"]} //
-                {el["Score impact"]} // {el["Status"]}
-              </p>
-            ))}
-        </div>
-      </div> */}
+      
     </div>
   );
 }

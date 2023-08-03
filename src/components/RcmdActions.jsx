@@ -30,77 +30,96 @@ export default function RcmdActions({ fuld ,setRa}) {
   const [filteredData, setFilteredData] = useState([]);
   const [categoryData, setCategoryData] = useState(null);
   const [toAddressData, setToAddress] = useState(null);
+// This function takes an array as an argument, applies the ModelData function to the array, and then returns the result.
+// It is used to calculate some kind of results based on the array data.
+function calculateCategoryResults(arr) {
+  const res = ModelData(arr);
+  return res;
+}
 
-  function calculateCategoryResults(arr) {
-    const res = ModelData(arr);
-    return res;
+// This function is similar to calculateCategoryResults, but it also logs the results to the console and sets the 'results' state variable.
+function calculateResults(arr) {
+  const res = ModelData(arr);
+  console.log(res);
+  setResults(res);
+}
+
+// This constant maps over the 'fullData' array, creating a new array of objects where each object has a 'value' and 'label' property.
+// 'value' is the original object from 'fullData', and 'label' is the 'Recommended action' property of the original object.
+// This is likely used to generate options for a select dropdown menu.
+const selectOptions = fullData.map((el) => {
+  return { value: el, label: el["Recommended action"] };
+});
+
+// Note: This function seems to be a duplicate of the previous 'calculateCategoryResults' function and can probably be removed.
+function calculateCategoryResults(arr) {
+  const res = ModelData(arr);
+  return res;
+}
+
+// This function takes a category as an argument and filters either 'filteredData' or 'fullData' based on the category,
+// then calculates results from the filtered data and updates the 'categoryData' state variable with the category and results.
+// It also resets the 'toAddress' state variable to null.
+function filterByCategory(category) {
+  if (filteredData.length > 0) {
+    let newArr = [...filteredData].filter((el) => el["Category"] == category);
+    setCategoryData({
+      category: category,
+      data: calculateCategoryResults(newArr),
+    });
+    setToAddress(null);
+  } else {
+    let newArr = [...fullData].filter((el) => el["Category"] == category);
+    setCategoryData({
+      category: category,
+      data: calculateCategoryResults(newArr),
+    });
+    setToAddress(null);
   }
+}
 
-  function calculateResults(arr) {
-    const res = ModelData(arr);
-    console.log(res);
-    setResults(res);
+// This function works similarly to 'filterByCategory', but filters by the 'Status' field (here called 'toAd') instead of 'Category'.
+// It updates the 'toAddress' state variable with the address and results, and resets the 'categoryData' state variable to null.
+function filterByToAddress(toAd) {
+  if (filteredData.length > 0) {
+    let newArr = [...filteredData].filter((el) => el["Status"] == toAd);
+    setToAddress({
+      toAddress: toAd,
+      data: calculateCategoryResults(newArr),
+    });
+    setCategoryData(null);
+  } else {
+    let newArr = [...fullData].filter((el) => el["Status"] == toAd);
+    setToAddress({
+      toAddress: toAd,
+      data: calculateCategoryResults(newArr),
+    });
+    setCategoryData(null);
   }
+}
 
-  const selectOptions = fullData.map((el) => {
-    return { value: el, label: el["Recommended action"] };
-  });
+// This useEffect hook runs once when the component mounts and calculates results based on 'fuld',
+// then updates the 'ra' and 'results' state variables with the results.
+useEffect(() => {
+  const res = ModelData(fuld);
+  setRa(res.points)
+  setResults(res);
+}, []);
 
-  function calculateCategoryResults(arr) {
-    const res = ModelData(arr);
-    return res;
-  }
+// This useEffect hook runs whenever 'filteredData' changes.
+// It calculates results based on 'filteredData' if it's not empty, otherwise it uses 'fullData'.
+useEffect(() => {
+  filteredData.length != 0
+    ? calculateResults(filteredData)
+    : calculateResults(fullData);
+}, [filteredData]);
 
-  function filterByCategory(category) {
-    if (filteredData.length > 0) {
-      let newArr = [...filteredData].filter((el) => el["Category"] == category);
-      setCategoryData({
-        category: category,
-        data: calculateCategoryResults(newArr),
-      });
-      setToAddress(null);
-    } else {
-      let newArr = [...fullData].filter((el) => el["Category"] == category);
-      setCategoryData({
-        category: category,
-        data: calculateCategoryResults(newArr),
-      });
-      setToAddress(null);
-    }
-  }
-  function filterByToAddress(toAd) {
-    if (filteredData.length > 0) {
-      let newArr = [...filteredData].filter((el) => el["Status"] == toAd);
-      setToAddress({
-        toAddress: toAd,
-        data: calculateCategoryResults(newArr),
-      });
-      setCategoryData(null);
-    } else {
-      let newArr = [...fullData].filter((el) => el["Status"] == toAd);
-      setToAddress({
-        toAddress: toAd,
-        data: calculateCategoryResults(newArr),
-      });
-      setCategoryData(null);
-    }
-  }
+// If 'results' is falsy (which can mean it's null, undefined, false, 0, or an empty string), the component renders 'Loading'.
+// This is probably used as a loading indicator while the application is waiting for 'results' to be calculated.
+if (!results) {
+  return <p>Loading</p>;
+}
 
-  useEffect(() => {
-    const res = ModelData(fuld);
-    setRa(res.points)
-    setResults(res);
-  }, []);
-
-  useEffect(() => {
-    filteredData.length != 0
-      ? calculateResults(filteredData)
-      : calculateResults(fullData);
-  }, [filteredData]);
-
-  if (!results) {
-    return <p>Loading</p>;
-  }
 
   const dataHalfDonut = {
     labels: [],

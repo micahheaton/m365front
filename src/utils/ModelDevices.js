@@ -1,4 +1,5 @@
 export const modelDevices = (devices) => {
+  // Count the number of devices managed by each manager.
   const countManagedBy = devices.reduce((acc, device) => {
     const managedBy = device["Managed By"];
     if (managedBy) {
@@ -11,9 +12,10 @@ export const modelDevices = (devices) => {
     }
     return acc;
   }, []);
-
+  // Sort managers by the number of devices they manage.
   const managedBy = countManagedBy.sort((a, b) => b.count - a.count);
 
+  // Count the number of devices for each OS platform.
   const countOsPlatform = devices.reduce((acc, device) => {
     const platform = device["OS Platform"];
     if (platform) {
@@ -26,9 +28,10 @@ export const modelDevices = (devices) => {
     }
     return acc;
   }, []);
-
+  // Sort OS platforms by the number of devices they have.
   const osPlatform = countOsPlatform.sort((a, b) => b.count - a.count);
 
+  // Count the number of devices for each risk level and store the device data.
   const countRisks = devices.reduce((acc, device) => {
     const risk = device["Risk Level"];
     if (risk) {
@@ -42,9 +45,10 @@ export const modelDevices = (devices) => {
     }
     return acc;
   }, {});
-  
+
+  // Define the order of risk levels.
   const riskLevelsOrder = ["High", "Medium", "Low", "Informational", "No known risks"];
-  
+  // Sort risk levels according to the predefined order and format the data.
   const risks = Object.keys(countRisks)
     .sort((a, b) => {
       const indexA = riskLevelsOrder.indexOf(a);
@@ -56,35 +60,38 @@ export const modelDevices = (devices) => {
       count: countRisks[risk].count,
       risks: countRisks[risk].risks,
     }));
-    const countExposures = devices.reduce((acc, device) => {
-      const exposure = device["Exposure Level"];
-      if (exposure) {
-        const existing = acc[exposure];
-        if (existing) {
-          existing.count++;
-          existing.risks.push(device);
-        } else {
-          acc[exposure] = { count: 1, risks: [device] };
-        }
-      }
-      return acc;
-    }, {});
-  
-    const exposureLevelsOrder = ["High", "Medium", "Low","No data available"];
-  
-    // Convert the countExposures object to an array of objects containing exposure level name, count, and devices
-    const exposures = Object.keys(countExposures)
-      .sort((a, b) => {
-        const indexA = exposureLevelsOrder.indexOf(a);
-        const indexB = exposureLevelsOrder.indexOf(b);
-        return indexA - indexB;
-      })
-      .map((exposure) => ({
-        name: exposure,
-        count: countExposures[exposure].count,
-        risks: countExposures[exposure].risks,
-      }));
 
+  // Count the number of devices for each exposure level and store the device data.
+  const countExposures = devices.reduce((acc, device) => {
+    const exposure = device["Exposure Level"];
+    if (exposure) {
+      const existing = acc[exposure];
+      if (existing) {
+        existing.count++;
+        existing.risks.push(device);
+      } else {
+        acc[exposure] = { count: 1, risks: [device] };
+      }
+    }
+    return acc;
+  }, {});
+
+  // Define the order of exposure levels.
+  const exposureLevelsOrder = ["High", "Medium", "Low","No data available"];
+  // Sort exposure levels according to the predefined order and format the data.
+  const exposures = Object.keys(countExposures)
+    .sort((a, b) => {
+      const indexA = exposureLevelsOrder.indexOf(a);
+      const indexB = exposureLevelsOrder.indexOf(b);
+      return indexA - indexB;
+    })
+    .map((exposure) => ({
+      name: exposure,
+      count: countExposures[exposure].count,
+      risks: countExposures[exposure].risks,
+    }));
+
+  // Count the number of devices for each health status.
   const healthStatus = devices.reduce((acc, device) => {
     const health = device["Health Status"];
     if (health) {
@@ -98,6 +105,7 @@ export const modelDevices = (devices) => {
     return acc;
   }, []);
 
+  // Count the number of devices for each antivirus status.
   const antiVirus = devices.reduce((acc, device) => {
     const anti = device["Antivirus status"];
     if (anti) {
@@ -111,6 +119,6 @@ export const modelDevices = (devices) => {
     return acc;
   }, []);
 
-  return {managedBy,osPlatform,risks,exposures,healthStatus,antiVirus}
-  
+  // Return the counts for each property.
+  return {managedBy, osPlatform, risks, exposures, healthStatus, antiVirus};
 };
