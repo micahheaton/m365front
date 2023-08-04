@@ -179,7 +179,7 @@ function App() {
                   </p>
                   <CloudUpload className="cloud-upload-icon" />
                   <p className="subtitle">Supported files</p>
-                  <p className="ext">CSV file</p>
+                  <p className="ext">Secure Score Recommended Actions CSV File</p>
                 </label>
                 <input
                   id="file-input"
@@ -201,7 +201,7 @@ function App() {
                   </p>
                   <CloudUpload className="cloud-upload-icon" />
                   <p className="subtitle">Supported files</p>
-                  <p className="ext">CSV file</p>
+                  <p className="ext">Devices Export CSV File</p>
                 </label>
                 <input
                   id="device-file-input"
